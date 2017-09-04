@@ -1,17 +1,16 @@
 $(document).ready(function(){
 /*FireBase
 ==============================================================*/
-// Initialize Firebase
-// Initialize Firebase
-var config = {
-  apiKey: "AIzaSyDXzDv-4TUTG0VfQN_FKHgcUxicAt_OdaE",
-  authDomain: "train-35388.firebaseapp.com",
-  databaseURL: "https://train-35388.firebaseio.com",
-  projectId: "train-35388",
-  storageBucket: "train-35388.appspot.com",
-  messagingSenderId: "1082289371507"
-};
-firebase.initializeApp(config);
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDXzDv-4TUTG0VfQN_FKHgcUxicAt_OdaE",
+    authDomain: "train-35388.firebaseapp.com",
+    databaseURL: "https://train-35388.firebaseio.com",
+    projectId: "train-35388",
+    storageBucket: "train-35388.appspot.com",
+    messagingSenderId: "1082289371507"
+  };
+  firebase.initializeApp(config);
 
   //Reference database
   database = firebase.database();
@@ -20,7 +19,7 @@ firebase.initializeApp(config);
 ==============================================================*/
 var trainName = '';
 var dest = '';
-var firstTrainTime = '';
+var firstTrainTime = ''; 
 var freq = '';
 
 //Conversion Variable
@@ -28,15 +27,15 @@ var firstTimeConverted = '';
 var diffTime = '';
 var tRemainder;
 var tMinutesTillTrain;
-var nextTrain;
+var nextTrain; 
 
 //Data reference
 var trainNameData = '';
 var destData = '';
 var arrivalData = '';
 var freqData = '';
-var minutesAwayData = '';
-
+var minutesAwayData = ''; 
+ 
 /*Functions
 ==============================================================*/
 	//When Submit button is clicked.....
@@ -48,7 +47,7 @@ var minutesAwayData = '';
 		firstTrainTime = $('#firstTrainTime').val().trim();
 		freq = $('#freq').val().trim();
 
-		//Removed input info
+		//Removed input info 
 		$('#trainName').val('');
 		$('#dest').val('');
 		$('#firstTrainTime').val('');
@@ -58,30 +57,30 @@ var minutesAwayData = '';
 			//Convert to HH:MM
 			firstTimeConverted = moment(firstTrainTime, "hh:mm").subtract(1, "years");
 			//Converts the firsTimeCover object into string
-
+			
 			 // Current Time
 		    var currentTime = moment();
 			diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-
+			
 			// Time apart (remainder)
 			tRemainder = diffTime % freq;
 
 			// Minute Until Train
 			tMinutesTillTrain = freq - tRemainder;
-
+    		
     		// Next Train
 			nextTrain = moment().add(tMinutesTillTrain, "minutes");
 			nextTrainFormat = moment(nextTrain).format('hh:mm');
-
+		
 		database.ref('/trainSchedule').push({
 			trainName: trainName,
 			destination: dest,
 			arrival: nextTrainFormat,
 			minutesAway: tMinutesTillTrain,
-			frequency: freq
-		});
-	});
-
+			frequency: freq 
+		}); 	
+	}); 
+		
 		database.ref('/trainSchedule').on('child_added',function(snap){
 					//Testing
 					trainNameData = snap.val().trainName;
@@ -97,7 +96,7 @@ var minutesAwayData = '';
 						var newTd = $('<td>');
 						newTd.text(dataArray[i]);
 						newTd.appendTo(newTr);
-					}
+					}	
 					$('.table').append(newTr);
 		});
 });// End of line
